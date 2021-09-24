@@ -1,5 +1,6 @@
-import firebase from "firebase/app";
-import "firebase/database";
+// import firebase from "firebase/app";
+// import "firebase/database";
+import firebase from "firebase";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -14,9 +15,3 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 export default firebase;
-
-//AddInfo
-export const addInfo = (info) => {
-  const contactRef = firebase.database().ref("blogs");
-  contactRef.push(info);
-};
