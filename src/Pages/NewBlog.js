@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
+
 import {
   Form,
   TextArea,
@@ -9,6 +11,7 @@ import {
   Image,
   Segment,
 } from "semantic-ui-react";
+import { useHistory } from "react-router";
 import firebase from "../firebase/firebase";
 
 const initialBlogValues = {
@@ -19,6 +22,12 @@ const initialBlogValues = {
 
 const NewBlog = () => {
   const [blog, setBlog] = useState(initialBlogValues);
+
+  useEffect(() => {
+    console.log("env", process.env);
+  }, []);
+
+  const history = useHistory();
 
   // CRUD
 
@@ -33,11 +42,13 @@ const NewBlog = () => {
     // console.log(info);
     blogRef.push(blog);
     setBlog(initialBlogValues);
+    // history.push("/");
   };
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setBlog({ ...blog, [name]: value });
+
     // console.log("blog", blog);
   };
 
