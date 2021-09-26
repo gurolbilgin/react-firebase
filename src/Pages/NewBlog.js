@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useEffect } from "react";
 
 import {
   Form,
@@ -22,10 +21,6 @@ const initialBlogValues = {
 
 const NewBlog = () => {
   const [blog, setBlog] = useState(initialBlogValues);
-
-  useEffect(() => {
-    console.log("env", process.env);
-  }, []);
 
   const history = useHistory();
 

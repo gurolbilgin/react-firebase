@@ -1,8 +1,5 @@
-// import firebase from "firebase/app";
-// import "firebase/database";
 import firebase from "firebase";
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
   authDomain: `${process.env.REACT_APP_PROJECT_ID}.firebaseapp.com`,
@@ -15,3 +12,40 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 export default firebase;
+
+export const newUser = async (email, password) => {
+  firebase
+    .auth()
+    .createUserWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      // Signed in
+      // var user = userCredential.user;
+      // ...
+    })
+    .catch((error) => {
+      // var errorCode = error.code;
+      // var errorMessage = error.message;
+      // ..
+    });
+};
+
+export const signOut = () => {
+  firebase.auth().signOut();
+};
+
+export const signIn = (email, password) => {
+  // console.log(email, password);
+  firebase
+    .auth()
+    .signInWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      // Signed in
+      // var user = userCredential.user;
+      // ...
+    })
+    .catch((error) => {
+      // var errorCode = error.code;
+      // var errorMessage = error.message;
+      alert("The password is invalid or the user does not have a password!");
+    });
+};
