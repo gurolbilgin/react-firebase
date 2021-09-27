@@ -1,7 +1,11 @@
 import React, { useState } from "react";
-import { Form, TextArea, Button, Grid, Segment } from "semantic-ui-react";
+import { Form, Button, Grid, Segment } from "semantic-ui-react";
 import { useHistory } from "react-router";
-import { signIn } from "../firebase/firebase";
+import {
+  signIn,
+  signUpProviderGoogle,
+  forgotPassword,
+} from "../firebase/firebase";
 // import { signIn, SignUpProvider, forgotPassword } from "";
 
 const initialLoginValues = {
@@ -16,11 +20,24 @@ const Login = () => {
   const handleOnChangeLogin = (e) => {
     const { name, value } = e.target;
     setLoginInfo({ ...loginInfo, [name]: value });
+    // console.log(loginInfo.password);
   };
 
   const handleSubmitLogin = () => {
     signIn(loginInfo.email, loginInfo.password);
     history.push("/");
+  };
+
+  const handleProviderLogin = () => {
+    signUpProviderGoogle();
+    history.push("/");
+  };
+
+  const handleForgotPassword = () => {
+    setTimeout(() => {
+      history.push("/login");
+    }, 3000);
+    forgotPassword();
   };
 
   return (
@@ -54,7 +71,22 @@ const Login = () => {
             <Button color="teal" fluid size="large" onClick={handleSubmitLogin}>
               LOGIN
             </Button>
-            <Button color="teal" fluid size="large">
+
+            <Button
+              color="teal"
+              fluid
+              size="large"
+              onClick={handleProviderLogin}
+            >
+              SIGN IN WITH GOOGLE
+            </Button>
+
+            <Button
+              color="teal"
+              fluid
+              size="large"
+              onClick={handleForgotPassword}
+            >
               FORGOT PASSWORD?
             </Button>
           </Segment>

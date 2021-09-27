@@ -37,7 +37,7 @@ const NewBlog = () => {
     // console.log(info);
     blogRef.push(blog);
     setBlog(initialBlogValues);
-    // history.push("/");
+    history.push("/");
   };
 
   const handleOnChange = (e) => {

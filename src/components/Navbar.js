@@ -1,20 +1,17 @@
-// import React, { useContext } from "react";
-// import { useHistory } from "react-router-dom";
-// import { AuthContext } from "../context/AuthContext";
-// import { signOut } from "../auth/firebase";
-import {
-  Button,
-  Nav,
-  NavDropdown,
-  Form,
-  FormControl,
-  Navbar,
-  Container,
-} from "react-bootstrap";
+import React, { useContext } from "react";
+import { useHistory, Link } from "react-router-dom";
+import { Nav, NavDropdown, Navbar } from "react-bootstrap";
+import { signOut } from "../firebase/firebase";
+import { AuthContext } from "../context/AuthContext";
 
 const Header = () => {
-  // const history = useHistory();
-  // const { currentUser } = useContext(AuthContext);
+  const history = useHistory();
+  const { currentUser } = useContext(AuthContext);
+
+  const signOutHandler = () => {
+    signOut();
+    history.push("/login");
+  };
 
   return (
     <Navbar bg="light" expand="md">
@@ -47,12 +44,28 @@ const Header = () => {
             Link
           </Nav.Link> */}
         </Nav>
+        <p>{}</p>
 
         <NavDropdown title="Link" id="navbarScrollingDropdown">
-          <NavDropdown.Item href="#action3">Profile</NavDropdown.Item>
-          <NavDropdown.Item href="#action4">New</NavDropdown.Item>
+          <NavDropdown.Item>
+            <Link className="links" to="/profile">
+              Profile
+            </Link>
+          </NavDropdown.Item>
+
+          <NavDropdown.Item>
+            <Link className="links" to="/newblog">
+              New
+            </Link>
+          </NavDropdown.Item>
+
           <NavDropdown.Divider />
-          <NavDropdown.Item href="#action5">Logout</NavDropdown.Item>
+
+          <Link>
+            <NavDropdown.Item className="links" onClick={signOutHandler}>
+              Logout
+            </NavDropdown.Item>
+          </Link>
         </NavDropdown>
       </Navbar.Collapse>
     </Navbar>

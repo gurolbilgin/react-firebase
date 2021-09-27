@@ -1,42 +1,59 @@
 import React, { useState } from "react";
 import { Form, Button, Grid, Segment } from "semantic-ui-react";
 import { useHistory } from "react-router";
-import { signIn } from "../firebase/firebase";
-// import { signIn, SignUpProvider, forgotPassword } from "";
+import { newUser, signUpProviderGoogle } from "../firebase/firebase";
 
-const initialLoginValues = {
+const initialRegisterValues = {
+  username: "",
   email: "",
   password: "",
 };
 
-const Login = () => {
+const Register = () => {
   const history = useHistory();
-  const [loginInfo, setLoginInfo] = useState(initialLoginValues);
+  const [register, setRegister] = useState(initialRegisterValues);
 
-  const handleOnChangeLogin = (e) => {
+  const handleOnChangeRegister = (e) => {
     const { name, value } = e.target;
-    setLoginInfo({ ...loginInfo, [name]: value });
+    setRegister({ ...register, [name]: value });
+    // console.log(register.email, register.password, register.username);
   };
 
-  const handleSubmitLogin = () => {
-    signIn(loginInfo.email, loginInfo.password);
+  const handleSubmitRegister = () => {
+    newUser(register.email, register.password, register.username);
+    history.push("/");
+  };
+
+  const handleProviderRegisterGoogle = () => {
+    signUpProviderGoogle();
     history.push("/");
   };
 
   return (
     <Grid textAlign="center" verticalAlign="middle">
       <Grid.Column style={{ width: 300 }}>
-        <h2 className="contact-header">LOGIN</h2>
+        <h2 className="contact-header">REGISTER</h2>
         <Form size="large">
           <Segment stacked>
+            <Form.Input
+              fluid
+              name="username"
+              // icon="user"
+              // iconPosition="left"
+              placeholder="Username*"
+              value={register.username}
+              onChange={handleOnChangeRegister}
+              // required
+            />
+
             <Form.Input
               fluid
               name="email"
               // icon="user"
               // iconPosition="left"
               placeholder="Email*"
-              value={loginInfo.email}
-              onChange={handleOnChangeLogin}
+              value={register.email}
+              onChange={handleOnChangeRegister}
               // required
             />
 
@@ -46,16 +63,28 @@ const Login = () => {
               // icon="phone"
               // iconPosition="left"
               placeholder="Password*"
-              value={loginInfo.password}
-              onChange={handleOnChangeLogin}
+              value={register.password}
+              onChange={handleOnChangeRegister}
               // required
             />
 
-            <Button color="teal" fluid size="large" onClick={handleSubmitLogin}>
+            <Button
+              name="submit"
+              color="teal"
+              fluid
+              size="large"
+              onClick={handleSubmitRegister}
+            >
               LOGIN
             </Button>
-            <Button color="teal" fluid size="large">
-              FORGOT PASSWORD?
+            <Button
+              name="googleRegister"
+              color="teal"
+              fluid
+              size="large"
+              onClick={handleProviderRegisterGoogle}
+            >
+              SIGUP WITH GOOGLE?
             </Button>
           </Segment>
         </Form>
@@ -64,4 +93,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
