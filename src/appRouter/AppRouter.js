@@ -12,10 +12,10 @@ const AppRouter = () => {
       <Navbar />
       <Switch>
         <Route exact path="/" component={Dashboard} />
-        <Route exact path="/newblog" component={NewBlog} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/register" component={Register} />
-        <Route exact path="/profile" component={Profile} />
+        <Route path="/newblog" component={NewBlog} />
+        <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
+        <Route path="/profile" component={Profile} />
       </Switch>
     </Router>
   );

@@ -1,4 +1,5 @@
 import firebase from "firebase";
+import { useEffect, useState } from "react";
 
 // CONFIGURATION
 
@@ -15,6 +16,30 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 export default firebase;
 
+// FETCH BLOGS
+
+export const useFetch = () => {
+  const [blogList, setBlogList] = useState();
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    const blogRef = firebase.database().ref("Blogs");
+    blogRef.on("value", (snapshot) => {
+      const blogs = snapshot.val();
+
+      const blogArray = [];
+      for (let id in blogs) {
+        blogArray.push({ id, ...blogs[id] });
+      }
+
+      setBlogList(blogArray);
+      setLoading(false);
+    });
+  }, []);
+  return { blogList, loading };
+};
+
 // CREATE A NEW USER
 
 export const newUser = async (email, password, username) => {
@@ -24,7 +49,7 @@ export const newUser = async (email, password, username) => {
       .createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
         // Signed in
-        var user = userCredential.user;
+        // var user = userCredential.user;
         // ...
       })
       .catch((error) => {
