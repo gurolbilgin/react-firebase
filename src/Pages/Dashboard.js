@@ -1,36 +1,42 @@
 import React from "react";
-import { Card, Grid, Image, Icon, CardContent } from "semantic-ui-react";
+import { Card, Grid, Image, Icon } from "semantic-ui-react";
 import { useFetch } from "../firebase/firebase";
 
 const Dashboard = () => {
   // console.log("fetch", useFetch());
   const { blogList, loading } = useFetch();
-  // console.log("blogList", blogList);
-  // console.log("Loading", loading);
+  console.log("blogList", blogList);
+  console.log("Loading", loading);
+  // useFetch();
   return (
     <Grid doubling columns={8}>
       <Grid.Column>
-        <Card>
-          <Card.Content></Card.Content>
-          <Image
-            src="https://react.semantic-ui.com/images/avatar/large/matthew.png"
-            wrapped
-            ui={false}
-          />
-          <Card.Content>
-            <Card.Header>{"title"}</Card.Header>
-            <Card.Meta>
-              <span className="date">{"date"}</span>
-            </Card.Meta>
-            <Card.Description>{"context"}</Card.Description>
-          </Card.Content>
-          <Card.Content extra>
-            <a>
-              <Icon name="user" />
-              22 Friends {"like- dislike state can be added"}
-            </a>
-          </Card.Content>
-        </Card>
+        {loading ? (
+          <p>loading</p>
+        ) : blogList.length === 0 ? (
+          <p>There is no blog to list</p>
+        ) : (
+          blogList.map((blog, index) => (
+            <Card key={index}>
+              <Card.Content>
+                <Image src={blog.image} wrapped ui={false} />
+              </Card.Content>
+              <Card.Content>
+                <Card.Header>{blog.title}</Card.Header>
+                <Card.Meta>
+                  <span className="date">{"date"}</span>
+                </Card.Meta>
+                <Card.Description>{blog.content}</Card.Description>
+              </Card.Content>
+              <Card.Content extra>
+                <a>
+                  <Icon name="user" />
+                  22 Friends {"like- dislike state can be added"}
+                </a>
+              </Card.Content>
+            </Card>
+          ))
+        )}
       </Grid.Column>
     </Grid>
   );

@@ -20,10 +20,10 @@ export default firebase;
 
 export const useFetch = () => {
   const [blogList, setBlogList] = useState();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(true);
+    // setLoading(true);
     const blogRef = firebase.database().ref("Blogs");
     blogRef.on("value", (snapshot) => {
       const blogs = snapshot.val();
