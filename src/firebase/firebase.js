@@ -125,3 +125,10 @@ export const forgotPassword = (email) => {
 };
 
 // ADD BLOG
+
+//  UPDATE BLOG
+export const updateInfo = (info) => {
+  const contactRef = firebase.database().ref("Blogs").child(info.id);
+  contactRef.update(info);
+  //  succesNotify("Updated Successfully!");
+};
