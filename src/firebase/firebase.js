@@ -23,7 +23,7 @@ export const useFetch = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // setLoading(true);
+    setLoading(true);
     const blogRef = firebase.database().ref("Blogs");
     blogRef.on("value", (snapshot) => {
       const blogs = snapshot.val();

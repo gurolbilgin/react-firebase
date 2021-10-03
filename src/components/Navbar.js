@@ -7,10 +7,15 @@ import { AuthContext } from "../context/AuthContext";
 const Header = () => {
   const history = useHistory();
   const { currentUser } = useContext(AuthContext);
+  ` `;
 
   const signOutHandler = () => {
     signOut();
     history.push("/login");
+  };
+
+  const pushDashboard = () => {
+    history.push("/");
   };
 
   return (
@@ -34,10 +39,8 @@ const Header = () => {
         >
           {/* <Nav.Link href="#action2">Link</Nav.Link> */}
 
-          <Nav.Link className="link" href="#action1">
-            {/* <code> */}
-            ------- {"<"}Gurol's Blog Bay /{">"} --------
-            {/* </code>{" "} */}
+          <Nav.Link className="link" onClick={null}>
+            <code>{" ------- < Gurol's Blog Bay >  -------- "}</code>
           </Nav.Link>
 
           {/* <Nav.Link href="#" disabled>

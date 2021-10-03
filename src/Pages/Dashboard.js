@@ -1,8 +1,7 @@
 import React from "react";
-import { useHistory } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { Card, Grid, Image, Icon } from "semantic-ui-react";
 import { useFetch } from "../firebase/firebase";
-import id from "../appRouter/AppRouter";
 import { Link } from "react-router-dom";
 
 const Dashboard = () => {
@@ -10,8 +9,9 @@ const Dashboard = () => {
   const { blogList, loading } = useFetch();
   console.log("blogList", blogList);
   // console.log("Loading", loading);
-  // useFetch();
-  const history = useHistory();
+
+  const { id } = useParams();
+  console.log("id", id);
 
   return (
     <Grid doubling columns={8}>
