@@ -6,8 +6,8 @@ import { useFetch } from "../firebase/firebase";
 const Details = () => {
   const { blogList, loading } = useFetch();
   const { id } = useParams();
-
-  const detailedBlog = blogList.filter((blog) => blog.id === id);
+  console.log("detailBlogList", blogList);
+  const detailedBlog = blogList?.filter((blog) => blog.id === id);
 
   return (
     <Grid doubling columns={8}>

@@ -7,7 +7,6 @@ import { AuthContext } from "../context/AuthContext";
 const Header = () => {
   const history = useHistory();
   const { currentUser } = useContext(AuthContext);
-  ` `;
 
   const signOutHandler = () => {
     signOut();
