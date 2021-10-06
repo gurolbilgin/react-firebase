@@ -38,7 +38,7 @@ const Header = () => {
         >
           {/* <Nav.Link href="#action2">Link</Nav.Link> */}
 
-          <Nav.Link className="link" onClick={null}>
+          <Nav.Link className="link" onClick={pushDashboard}>
             <code>{" ------- < Gurol's Blog Bay >  -------- "}</code>
           </Nav.Link>
 

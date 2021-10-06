@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-
+import React, { useContext, useState } from "react";
 import {
   Form,
   TextArea,
@@ -12,17 +11,41 @@ import {
 } from "semantic-ui-react";
 import { useHistory } from "react-router";
 import firebase from "../firebase/firebase";
+import { AuthContext } from "../context/AuthContext";
+
+const createDate = new Date();
 
 const initialBlogValues = {
+  writer: {
+    displayName: "",
+    email: "",
+  },
   title: "",
   imgURL: "",
   content: "",
+  date: createDate.toISOString().split("T")[0],
+  likes: 0,
+  dislikes: 0,
 };
 
 const NewBlog = () => {
-  const [blog, setBlog] = useState(initialBlogValues);
+  const [blog, setBlog] = useState({
+    writer: {
+      displayName: currentUser?.displayName ? currentUser?.displayName : "",
+      email: currentUser?.email ? currentUser?.email : "",
+    },
+    title: "",
+    imgURL: "",
+    content: "",
+    date: createDate.toISOString().split("T")[0],
+    likes: 0,
+    dislikes: 0,
+  });
+  const { currentUser } = useContext(AuthContext);
 
   const history = useHistory();
+
+  // console.log("currenUser", currentUser);
 
   // CRUD
 
@@ -47,6 +70,7 @@ const NewBlog = () => {
     // console.log("blog", blog);
   };
 
+  console.log("initBlogVal", blog);
   return (
     // <Container>
     //   <Image src="../assets/blok.png" />

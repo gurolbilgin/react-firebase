@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useParams } from "react-router";
-import { Card, Grid, Image, Icon } from "semantic-ui-react";
+import { Card, Grid, Image, Icon, Button } from "semantic-ui-react";
 import { useFetch } from "../firebase/firebase";
+import { AuthContext } from "../context/AuthContext";
 
 const Details = () => {
   const { blogList, loading } = useFetch();
   const { id } = useParams();
-  console.log("detailBlogList", blogList);
   const detailedBlog = blogList?.filter((blog) => blog.id === id);
+
+  console.log("detailBlogList", detailedBlog);
+
+  const { currentUser } = useContext(AuthContext);
+  console.log("email", currentUser?.email);
 
   return (
     <Grid doubling columns={8}>
@@ -37,6 +42,12 @@ const Details = () => {
           </Card>
         )}
       </Grid.Column>
+      {currentUser?.email && (
+        <div>
+          <Button color="blue">EDIT</Button>
+          <Button color="red">DELETE</Button>
+        </div>
+      )}
     </Grid>
   );
 };
