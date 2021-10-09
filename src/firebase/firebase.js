@@ -126,6 +126,13 @@ export const forgotPassword = (email) => {
 
 // ADD BLOG
 
+export const addBlog = (info) => {
+  const blogRef = firebase.database().ref("Blogs");
+
+  blogRef.push(info);
+  // we need a success notofocation here
+};
+
 //  UPDATE BLOG
 export const updateInfo = (info) => {
   const contactRef = firebase.database().ref("Blogs").child(info.id);

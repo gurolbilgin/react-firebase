@@ -10,10 +10,8 @@ import {
   Segment,
 } from "semantic-ui-react";
 import { useHistory } from "react-router";
-import firebase from "../firebase/firebase";
+import firebase, { addBlog } from "../firebase/firebase";
 import { AuthContext } from "../context/AuthContext";
-
-const createDate = new Date();
 
 const initialBlogValues = {
   writer: {
@@ -23,24 +21,14 @@ const initialBlogValues = {
   title: "",
   imgURL: "",
   content: "",
-  date: createDate.toISOString().split("T")[0],
+  date: "",
   likes: 0,
   dislikes: 0,
 };
 
 const NewBlog = () => {
-  const [blog, setBlog] = useState({
-    writer: {
-      displayName: currentUser?.displayName ? currentUser?.displayName : "",
-      email: currentUser?.email ? currentUser?.email : "",
-    },
-    title: "",
-    imgURL: "",
-    content: "",
-    date: createDate.toISOString().split("T")[0],
-    likes: 0,
-    dislikes: 0,
-  });
+  const [blog, setBlog] = useState(initialBlogValues);
+
   const { currentUser } = useContext(AuthContext);
 
   const history = useHistory();
@@ -50,22 +38,23 @@ const NewBlog = () => {
   // CRUD
 
   //AddInfo
-  const addBlog = () => {
-    const blogRef = firebase.database().ref("Blogs");
-    // const blogs = {
-    //   title: "",
-    //   imgURL: "",
-    //   content: "",
-    // };
-    // console.log(info);
-    blogRef.push(blog);
-    setBlog(initialBlogValues);
+  const handleSubmitBlogForm = (e) => {
+    e.preventDefault();
+    addBlog(e);
     history.push("/");
   };
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
-    setBlog({ ...blog, [name]: value });
+    setBlog({
+      ...blog,
+      writer: {
+        displayName: currentUser.displayName,
+      },
+      date: new Date().toISOString().split("T")[0],
+
+      [name]: value,
+    });
 
     // console.log("blog", blog);
   };
@@ -88,7 +77,7 @@ const NewBlog = () => {
     <Grid textAlign="center" verticalAlign="middle">
       <Grid.Column style={{ width: 300 }}>
         <h2 className="contact-header">NEW BLOG</h2>
-        <Form size="large" onSubmit={addBlog}>
+        <Form size="large" onSubmit={handleSubmitBlogForm}>
           <Segment stacked>
             <Form.Input
               fluid
